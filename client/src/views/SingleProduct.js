@@ -23,6 +23,7 @@ const Product = (props) => {
               <h3>{prod.title}</h3>
               <p>Price: {prod.price}</p>
               <p>Description: {prod.description}</p>
+              <Link to='/products'>Return to Full List</Link>
           </div>
       );
 };
