@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import axios from "axios";
-import { Link, navigate } from "@reach/router";
+import { Link } from "@reach/router";
 
 const Product = (props) => {
     const [prod, setProd] = useState({});
@@ -23,7 +23,7 @@ const Product = (props) => {
               <h3>{prod.title}</h3>
               <p>Price: {prod.price}</p>
               <p>Description: {prod.description}</p>
-              <Link to='/products'>Return to Full List</Link>
+              <Link to='/'>Return to Full List</Link>
           </div>
       );
 };

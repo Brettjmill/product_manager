@@ -9,9 +9,10 @@ const NewProducts = (props) => {
     const [description, setDescription] = useState("");
     const [errors, setErrors] = useState(null);
 
+    const fetchAllProducts = props.fetchAllProducts;
+
     const handleSubmit = (event) => {
-        // event.preventDefault();
-        // above was removed to facilitate page refresh
+        event.preventDefault();
         const newProduct = {
             title: title,
             price: price,
@@ -21,7 +22,8 @@ const NewProducts = (props) => {
         axios
             .post('http://localhost:8000/api/products', newProduct)
             .then((res) => {
-                navigate('/products/');
+                fetchAllProducts();
+                navigate('/');
                 console.log(res);
             })
             .catch((err) => {
