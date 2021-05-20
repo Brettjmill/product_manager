@@ -24,6 +24,18 @@ module.exports = {
             .catch((err) => {
                 res.status(400).json(err);
             });
+    },
+
+    findOne: function (req, res) {
+        console.log('find one method executed');
+
+        Product.findById(req.params.id)
+            .then((product) => {
+                res.json(product);
+            })
+            .catch((err) => {
+                res.status(400).json(err);
+            })
     }
 }
 

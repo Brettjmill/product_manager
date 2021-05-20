@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import axios from 'axios';
+import { navigate } from '@reach/router';
 
 const NewProducts = (props) => {
     const [title, setTitle] = useState("");
@@ -20,6 +21,7 @@ const NewProducts = (props) => {
         axios
             .post('http://localhost:8000/api/products', newProduct)
             .then((res) => {
+                navigate('/products');
                 console.log(res);
             })
             .catch((err) => {
