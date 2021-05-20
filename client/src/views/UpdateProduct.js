@@ -1,15 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+import { Link, navigate } from '@reach/router';
 
 import axios from 'axios';
-import { navigate } from '@reach/router';
 
-const NewProducts = (props) => {
+const UpdateProduct = (props) => {
     const [title, setTitle] = useState("");
     const [price, setPrice] = useState(0);
     const [description, setDescription] = useState("");
-    const [errors, setErrors] = useState(null);
 
-    const fetchAllProducts = props.fetchAllProducts;
+    useEffect(() => {
+        axios
+            .get('http://localhost:8000/api/products/' + props.id)
+            .then((res) => {
+                setTitle(res.data.title);
+                setPrice(res.data.price);
+                setDescription(res.data.description);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, [props.id]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -21,66 +32,61 @@ const NewProducts = (props) => {
         };
 
         axios
-            .post('http://localhost:8000/api/products', newProduct)
+            .put('http://localhost:8000/api/products/' + props.id, newProduct)
             .then((res) => {
-                fetchAllProducts();
-                navigate('/');
+                navigate('/products/' + props.id);
                 console.log(res);
             })
             .catch((err) => {
-                console.log(err.response.data.errors);
-                setErrors(err.response.data.errors);
+                console.log(err);
             })
     };
 
     return (
         <div>
-            <h1>Product Manager</h1>
-            <form 
+            <h1>Update Product:</h1>
+            <form
                 onSubmit = {(event) => {
                     handleSubmit(event);
                 }}
             >
                 <div>
                     <label>Title: </label>
-                    {errors?.title && (
-                        <span style={{ color: 'red' }}>{errors?.title?.product}</span>
-                    )}
                     <input
                         onChange = {(event) => {
                             setTitle(event.target.value);
                         }}
                         type = 'text'
+                        value = {title}
                     />
                 </div>
                 <div>
                     <label>Price: </label>
-                    {errors?.price && (
-                        <span style={{ color: 'red' }}>{errors?.price?.product}</span>
-                    )}
                     <input
                         onChange = {(event) => {
                             setPrice(event.target.value);
                         }}
                         type = 'text'
+                        value = {price}
                     />
                 </div>
                 <div>
                     <label>Description: </label>
-                    {errors?.description && (
-                        <span style={{ color: 'red' }}>{errors?.description?.product}</span>
-                    )}
                     <input
                         onChange = {(event) => {
                             setDescription(event.target.value);
                         }}
                         type = 'text'
+                        value = {description}
                     />
                 </div>
-                <button>Create</button>
+                <button>Submit</button>
+                <div>
+                <Link to='/'>Return to Full List</Link>
+              </div>
             </form>
         </div>
     );
 };
 
-export default NewProducts;
+export default UpdateProduct;

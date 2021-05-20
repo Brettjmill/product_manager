@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
-import { navigate, Link } from '@reach/router';
 
 import NewProducts from './NewProduct';
 import AllProducts from './AllProducts';
@@ -31,7 +30,8 @@ const Main = (props) => {
                 fetchAllProducts = {fetchAllProducts}/>
             <hr></hr>
             <AllProducts 
-                allProducts = {products}/>
+                fetchAllProducts = {fetchAllProducts}
+                products = {products}/>
         </div>
     )
 }

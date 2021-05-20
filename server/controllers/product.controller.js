@@ -27,7 +27,7 @@ module.exports = {
     },
 
     findOne: function (req, res) {
-        console.log('find one method executed');
+        console.log('find one method executed', 'url params:', req.params);
 
         Product.findById(req.params.id)
             .then((product) => {
@@ -36,6 +36,35 @@ module.exports = {
             .catch((err) => {
                 res.status(400).json(err);
             })
+    },
+
+    updateProduct: function (req, res) {
+        console.log('update product method executed', 'url params:', req.params);
+
+        Product.findByIdAndUpdate(req.params.id, req.body, {
+            runValidators: true,
+            new: true
+        })
+            .then((product) => {
+                res.json(product);
+            })
+            .catch((err) => {
+                res.status(400).json(err);
+            })
+    },
+
+    deleteProduct: function (req, res) {
+        console.log('delete product method executed', 'url params:', req.params);
+
+        Product.findByIdAndDelete(req.params.id)
+            .then ((product) => {
+                res.json(product);
+            })
+            .catch ((err) => {
+                res.status(400).json(err);
+            }) 
+
+        
     }
-}
+};
 
